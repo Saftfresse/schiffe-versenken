@@ -8,3 +8,13 @@ D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Ve
 D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.CoreCompileInputs.cache
 D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.exe
 D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.pdb
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.exe.config
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.exe
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.pdb
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csprojAssemblyReference.cache
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.Form1.resources
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.Properties.Resources.resources
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.GenerateResource.cache
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.CoreCompileInputs.cache
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.exe
+C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.pdb

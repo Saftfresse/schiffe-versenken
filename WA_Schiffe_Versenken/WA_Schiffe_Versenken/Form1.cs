@@ -23,17 +23,15 @@ namespace WA_Schiffe_Versenken
             int length;
             int amount;
             int id;
-            private List<int> shipsVisible;
 
             public string Name { get => name; set => name = value; }
             public int Length { get => length; set => length = value; }
             public int Amount { get => amount; set => amount = value; }
             public int Id { get => id; set => id = value; }
-            public List<int> ShipsVisible { get => shipsVisible; set => shipsVisible = value; }
         }
 
-        shipType[] userShips = new shipType[4];
-        shipType[] enemyShips = new shipType[4];
+        shipType[] ships = new shipType[4];
+        List<Ship> enemyShips = new List<Ship>();
 
         enum CellType
         {
@@ -123,10 +121,28 @@ namespace WA_Schiffe_Versenken
             return points;
         }
 
+        void hitShip(Ship s)
+        {
+
+        }
+
+        Ship getShipAtPoint(Point p)
+        {
+            Ship s = new Ship();
+            foreach (var item in enemyShips)
+            {
+                if (item.Points.Contains(p))
+                {
+                    s = item;
+                }
+            }
+            return s;
+        }
+
         void generateEnemy()
         {
             Random r = new Random();
-            foreach (var item in enemyShips)
+            foreach (var item in ships)
             {
                 for (int i = 0; i < item.Amount; i++)
                 {
@@ -137,10 +153,13 @@ namespace WA_Schiffe_Versenken
                         points = locationValid(newP, item.Length, r.Next(1, 5));
                         if (points.Count <= 0) newP = new Point(r.Next(0, 11), r.Next(0, 11));
                     }
+                    Ship newShip = new Ship() { Name = item.Name, ShipId = item.Id, Length = item.Length };
                     for (int j = 0; j < points.Count; j++)
                     {
                         enemyCells[points[j].X, points[j].Y] = (CellType)item.Id;
+                        newShip.Points[j] = new Point(points[j].X, points[j].Y);
                     }
+                    enemyShips.Add(newShip);
                 }
             }
             canvas_enemy.Invalidate();
@@ -169,15 +188,11 @@ namespace WA_Schiffe_Versenken
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            userShips[0] = new shipType() { Name = "Schlachtschiff", Amount = 1, Length = 5, Id = 1, ShipsVisible = new List<int>() };
-            userShips[1] = new shipType() { Name = "Kreuzer", Amount = 2, Length = 4, Id = 2, ShipsVisible = new List<int>() };
-            userShips[2] = new shipType() { Name = "Zerstörer", Amount = 3, Length = 3, Id = 3, ShipsVisible = new List<int>() };
-            userShips[3] = new shipType() { Name = "UBoot", Amount = 4, Length = 2, Id = 4, ShipsVisible = new List<int>() };
-            enemyShips[0] = new shipType() { Name = "Schlachtschiff", Amount = 1, Length = 5, Id = 1, ShipsVisible = new List<int>() };
-            enemyShips[1] = new shipType() { Name = "Kreuzer", Amount = 2, Length = 4, Id = 2, ShipsVisible = new List<int>() };
-            enemyShips[2] = new shipType() { Name = "Zerstörer", Amount = 3, Length = 3, Id = 3, ShipsVisible = new List<int>() };
-            enemyShips[3] = new shipType() { Name = "UBoot", Amount = 4, Length = 2, Id = 4, ShipsVisible = new List<int>() };
-
+            ships[0] = new shipType() { Name = "Schlachtschiff", Amount = 1, Length = 5, Id = 1,  };
+            ships[1] = new shipType() { Name = "Kreuzer", Amount = 2, Length = 4, Id = 2,  };
+            ships[2] = new shipType() { Name = "Zerstörer", Amount = 3, Length = 3, Id = 3,  };
+            ships[3] = new shipType() { Name = "UBoot", Amount = 4, Length = 2, Id = 4,  };
+            
             generateEnemy();
         }
 
@@ -189,15 +204,25 @@ namespace WA_Schiffe_Versenken
             {
                 for (int j  = 0; j < enemyCells.GetLength(1); j++)
                 {
+                    Color water = Color.MediumTurquoise;
                     Color c = Color.MediumTurquoise;
                     Color hitColor = Color.White;
                     if (hits[i, j] == 2) hitColor = Color.Red;
-                    if (enemyCells[i, j] == CellType.Schlachtschiff) c = Color.Gray;
+                    if (enemyCells[i, j] == CellType.Schlachtschiff) c = Color.FromArgb(40,40,40);
                     if (enemyCells[i, j] == CellType.Kreuzer) c = Color.IndianRed;
                     if (enemyCells[i, j] == CellType.Zerstörer) c = Color.PaleGreen;
                     if (enemyCells[i, j] == CellType.UBoot) c = Color.DarkOrange;
-                    e.Graphics.FillRectangle(new SolidBrush(c), currX, currY, length, length);
-
+                    if (!getShipAtPoint(new Point(i, j)).Destroyed)
+                    {
+                        e.Graphics.FillRectangle(new SolidBrush(water), currX, currY, length, length);
+                        e.Graphics.DrawRectangle(new Pen(Color.Gray), currX, currY, length, length);
+                    }
+                    else
+                    {
+                        e.Graphics.DrawRectangle(new Pen(Color.Gray), currX, currY, length, length);
+                        e.Graphics.FillRectangle(new SolidBrush(c), currX + 1, currY + 1, length + 2, length + 2);
+                    }
+                    
                     if (hits[i, j] > 0) e.Graphics.DrawEllipse(new Pen(hitColor, 2), currX + 5, currY + 5, length - 10, length - 10);
 
                     currX += length;
@@ -206,6 +231,21 @@ namespace WA_Schiffe_Versenken
                 currX = 0;
                 currY += length;
             }
+            int[] ships = new int[4];
+            int count = 0;
+            foreach (var item in enemyShips)
+            {
+                if (!item.Destroyed)
+                {
+                    ships[item.ShipId - 1]++;
+                    count++;
+                }
+            }
+            label_enemy.Text = string.Format("Schlachtschiffe:{0}\nKReuzer:{1}\nZerstörer:{2}\nU-Boote:{3}", ships[0], ships[1], ships[2], ships[3]);
+            if (count <= 0)
+            {
+                label_enemy.Text = "Gewonnen!";
+            }
         }
 
         private void canvas_enemy_MouseClick(object sender, MouseEventArgs e)
@@ -213,6 +253,7 @@ namespace WA_Schiffe_Versenken
             Point cellLoc = locationToCell(e.Location);
             if (hits[cellLoc.X, cellLoc.Y] == 0)
             {
+                Ship s = getShipAtPoint(new Point(cellLoc.X, cellLoc.Y));
                 if (enemyCells[cellLoc.X, cellLoc.Y] == CellType.Wasser)
                 {
                     hits[cellLoc.X, cellLoc.Y] = 1;
@@ -220,10 +261,67 @@ namespace WA_Schiffe_Versenken
                 else
                 {
                     hits[cellLoc.X, cellLoc.Y] = 2;
+                    if (s.Hits + 1 >= s.Length)
+                    {
+                        s.Destroyed = true;
+                    }
+                    else
+                    {
+                        s.Hits++;
+                    }
                 }
+                Console.WriteLine(s.Name + "  -  " + s.Uid.ToString("N") + "  -  " + s.Hits);
                 züge++;
                 label3.Text = "Züge\n" + züge;
                 canvas_enemy.Invalidate();
+            }
+        }
+
+        private void pb_enemy_top_Paint(object sender, PaintEventArgs e)
+        {
+            int currX = 9;
+            int length = canvas_enemy.Size.Width / enemyCells.GetLength(0);
+
+            for (int i = 0; i < enemyCells.GetLength(0); i++)
+            {
+                e.Graphics.DrawString((i + 1).ToString(), new Font("Arial Black", 14), new SolidBrush(Color.Black), new Point(i == 9 ? currX - 7 : currX, 2));
+                currX += length;
+            }
+        }
+
+        private void pb_enemy_left_Paint(object sender, PaintEventArgs e)
+        {
+            int currY = 6;
+            int length = canvas_enemy.Size.Width / enemyCells.GetLength(0);
+
+            for (int i = 0; i < enemyCells.GetLength(0); i++)
+            {
+                e.Graphics.DrawString(((char)(65 + i)).ToString(), new Font("Arial Black", 14), new SolidBrush(Color.Black), new Point(3, currY));
+                currY += length;
+            }
+        }
+
+        private void pictureBox3_Paint(object sender, PaintEventArgs e)
+        {
+            int currX = 9;
+            int length = canvas_enemy.Size.Width / enemyCells.GetLength(0);
+
+            for (int i = 0; i < enemyCells.GetLength(0); i++)
+            {
+                e.Graphics.DrawString((i + 1).ToString(), new Font("Arial Black", 14), new SolidBrush(Color.Black), new Point(i == 9 ? currX - 7 : currX, 2));
+                currX += length;
+            }
+        }
+
+        private void pictureBox2_Paint_1(object sender, PaintEventArgs e)
+        {
+            int currY = 6;
+            int length = canvas_enemy.Size.Width / enemyCells.GetLength(0);
+
+            for (int i = 0; i < enemyCells.GetLength(0); i++)
+            {
+                e.Graphics.DrawString(((char)(65 + i)).ToString(), new Font("Arial Black", 14), new SolidBrush(Color.Black), new Point(3, currY));
+                currY += length;
             }
         }
     }
