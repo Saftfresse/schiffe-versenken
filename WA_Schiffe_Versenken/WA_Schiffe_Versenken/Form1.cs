@@ -241,7 +241,7 @@ namespace WA_Schiffe_Versenken
                     count++;
                 }
             }
-            label_enemy.Text = string.Format("Schlachtschiffe:{0}\nKReuzer:{1}\nZerstörer:{2}\nU-Boote:{3}", ships[0], ships[1], ships[2], ships[3]);
+            label_enemy.Text = string.Format("Schlachtschiffe:{0}\nKreuzer:{1}\nZerstörer:{2}\nU-Boote:{3}", ships[0], ships[1], ships[2], ships[3]);
             if (count <= 0)
             {
                 label_enemy.Text = "Gewonnen!";
