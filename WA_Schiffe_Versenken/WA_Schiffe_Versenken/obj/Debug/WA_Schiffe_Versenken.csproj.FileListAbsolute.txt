@@ -1,0 +1,10 @@
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.exe.config
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.exe
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.pdb
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csprojResolveAssemblyReference.cache
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.Form1.resources
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.Properties.Resources.resources
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.GenerateResource.cache
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.CoreCompileInputs.cache
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.exe
+D:\Schule\Rust\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.pdb
