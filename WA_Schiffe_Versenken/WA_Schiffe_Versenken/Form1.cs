@@ -30,8 +30,15 @@ namespace WA_Schiffe_Versenken
             public int Id { get => id; set => id = value; }
         }
 
+        /// Grid Variablen
         shipType[] ships = new shipType[4];
         List<Ship> enemyShips = new List<Ship>();
+        List<Ship> userShips = new List<Ship>();
+        shipType pickedShip = new shipType();
+
+        /// Grafik Variablen
+        Bitmap userSide;
+        Point MLoc = new Point();
 
         enum CellType
         {
@@ -43,7 +50,8 @@ namespace WA_Schiffe_Versenken
         }
 
         int züge = 0;
-        int[,] hits = new int[10,10];
+        int[,] enemyHits = new int[10,10];
+        int[,] userHits = new int[10, 10];
         CellType[,] userCells = new CellType[10,10];
         CellType[,] enemyCells = new CellType[10,10];
 
@@ -120,10 +128,46 @@ namespace WA_Schiffe_Versenken
             }
             return points;
         }
-
-        void hitShip(Ship s)
+        
+        void redrawBitmap()
         {
+            using (var g = Graphics.FromImage(userSide))
+            {
+                int currX = 0, currY = 0;
+                int length = canvas_player.Size.Width / userCells.GetLength(0);
+                for (int i = 0; i < userCells.GetLength(0); i++)
+                {
+                    for (int j = 0; j < userCells.GetLength(1); j++)
+                    {
+                        Color water = Color.MediumTurquoise;
+                        Color c = Color.MediumTurquoise;
+                        Color hitColor = Color.White;
+                        if (userHits[i, j] == 2) hitColor = Color.Red;
+                        if (userCells[i, j] == CellType.Schlachtschiff) c = Color.FromArgb(40, 40, 40);
+                        if (userCells[i, j] == CellType.Kreuzer) c = Color.IndianRed;
+                        if (userCells[i, j] == CellType.Zerstörer) c = Color.PaleGreen;
+                        if (userCells[i, j] == CellType.UBoot) c = Color.DarkOrange;
+                        if (!getShipAtPoint(new Point(i, j)).Destroyed)
+                        {
+                            g.FillRectangle(new SolidBrush(water), currX, currY, length, length);
+                            g.DrawRectangle(new Pen(Color.Gray), currX, currY, length, length);
+                        }
+                        else
+                        {
+                            g.DrawRectangle(new Pen(Color.Gray), currX, currY, length, length);
+                            g.FillRectangle(new SolidBrush(c), currX + 1, currY + 1, length + 2, length + 2);
+                        }
 
+                        if (userHits[i, j] > 0) g.DrawEllipse(new Pen(hitColor, 2), currX + 5, currY + 5, length - 10, length - 10);
+
+                        currX += length;
+
+                    }
+                    currX = 0;
+                    currY += length;
+                }
+                g.DrawEllipse(new Pen(Color.Red, 5), new Rectangle(new Point(MLoc.X - 5, MLoc.Y- 5), new Size(10,10)));
+            }
         }
 
         Ship getShipAtPoint(Point p)
@@ -192,7 +236,8 @@ namespace WA_Schiffe_Versenken
             ships[1] = new shipType() { Name = "Kreuzer", Amount = 2, Length = 4, Id = 2,  };
             ships[2] = new shipType() { Name = "Zerstörer", Amount = 3, Length = 3, Id = 3,  };
             ships[3] = new shipType() { Name = "UBoot", Amount = 4, Length = 2, Id = 4,  };
-            
+
+            userSide = new Bitmap(canvas_player.Size.Width, canvas_player.Size.Height);
             generateEnemy();
         }
 
@@ -207,7 +252,7 @@ namespace WA_Schiffe_Versenken
                     Color water = Color.MediumTurquoise;
                     Color c = Color.MediumTurquoise;
                     Color hitColor = Color.White;
-                    if (hits[i, j] == 2) hitColor = Color.Red;
+                    if (enemyHits[i, j] == 2) hitColor = Color.Red;
                     if (enemyCells[i, j] == CellType.Schlachtschiff) c = Color.FromArgb(40,40,40);
                     if (enemyCells[i, j] == CellType.Kreuzer) c = Color.IndianRed;
                     if (enemyCells[i, j] == CellType.Zerstörer) c = Color.PaleGreen;
@@ -223,7 +268,7 @@ namespace WA_Schiffe_Versenken
                         e.Graphics.FillRectangle(new SolidBrush(c), currX + 1, currY + 1, length + 2, length + 2);
                     }
                     
-                    if (hits[i, j] > 0) e.Graphics.DrawEllipse(new Pen(hitColor, 2), currX + 5, currY + 5, length - 10, length - 10);
+                    if (enemyHits[i, j] > 0) e.Graphics.DrawEllipse(new Pen(hitColor, 2), currX + 5, currY + 5, length - 10, length - 10);
 
                     currX += length;
 
@@ -248,19 +293,25 @@ namespace WA_Schiffe_Versenken
             }
         }
 
+        private void canvas_player_Paint(object sender, PaintEventArgs e)
+        {
+            redrawBitmap();
+            e.Graphics.DrawImage(userSide, 0, 0);
+        }
+
         private void canvas_enemy_MouseClick(object sender, MouseEventArgs e)
         {
             Point cellLoc = locationToCell(e.Location);
-            if (hits[cellLoc.X, cellLoc.Y] == 0)
+            if (enemyHits[cellLoc.X, cellLoc.Y] == 0)
             {
                 Ship s = getShipAtPoint(new Point(cellLoc.X, cellLoc.Y));
                 if (enemyCells[cellLoc.X, cellLoc.Y] == CellType.Wasser)
                 {
-                    hits[cellLoc.X, cellLoc.Y] = 1;
+                    enemyHits[cellLoc.X, cellLoc.Y] = 1;
                 }
                 else
                 {
-                    hits[cellLoc.X, cellLoc.Y] = 2;
+                    enemyHits[cellLoc.X, cellLoc.Y] = 2;
                     if (s.Hits + 1 >= s.Length)
                     {
                         s.Destroyed = true;
@@ -322,6 +373,55 @@ namespace WA_Schiffe_Versenken
             {
                 e.Graphics.DrawString(((char)(65 + i)).ToString(), new Font("Arial Black", 14), new SolidBrush(Color.Black), new Point(3, currY));
                 currY += length;
+            }
+        }
+
+        private void canvas_player_MouseClick(object sender, MouseEventArgs e)
+        {
+            MLoc = e.Location;
+        }
+
+        private void btn_newRound_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_pick_1_Click(object sender, EventArgs e)
+        {
+            pickedShip = ships[0];
+        }
+
+        private void btn_pick_2_Click(object sender, EventArgs e)
+        {
+            pickedShip = ships[1];
+        }
+
+        private void btn_pick_3_Click(object sender, EventArgs e)
+        {
+            pickedShip = ships[2];
+        }
+
+        private void btn_pick_4_Click(object sender, EventArgs e)
+        {
+            pickedShip = ships[3];
+        }
+
+        private void canvas_player_MouseMove(object sender, MouseEventArgs e)
+        {
+            MLoc = e.Location;
+            canvas_player.Invalidate();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (canvas_player.Bounds.Contains(PointToClient(MousePosition)))
+            {
+                Console.WriteLine(e.KeyCode);
             }
         }
     }

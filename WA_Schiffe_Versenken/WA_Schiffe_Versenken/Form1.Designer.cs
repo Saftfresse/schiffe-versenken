@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.canvas_player = new System.Windows.Forms.PictureBox();
             this.canvas_enemy = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,8 +40,14 @@
             this.label_enemy = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.btn_exit = new System.Windows.Forms.Button();
+            this.btn_newRound = new System.Windows.Forms.Button();
+            this.btn_pick_4 = new System.Windows.Forms.Button();
+            this.btn_pick_3 = new System.Windows.Forms.Button();
+            this.btn_pick_2 = new System.Windows.Forms.Button();
+            this.btn_pick_1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas_player)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvas_enemy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_enemy_top)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_enemy_left)).BeginInit();
@@ -51,15 +57,18 @@
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // canvas_player
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(45, 88);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(350, 350);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.canvas_player.BackColor = System.Drawing.Color.White;
+            this.canvas_player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.canvas_player.Location = new System.Drawing.Point(45, 88);
+            this.canvas_player.Name = "canvas_player";
+            this.canvas_player.Size = new System.Drawing.Size(350, 350);
+            this.canvas_player.TabIndex = 0;
+            this.canvas_player.TabStop = false;
+            this.canvas_player.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_player_Paint);
+            this.canvas_player.MouseClick += new System.Windows.Forms.MouseEventHandler(this.canvas_player_MouseClick);
+            this.canvas_player.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_player_MouseMove);
             // 
             // canvas_enemy
             // 
@@ -161,31 +170,106 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Location = new System.Drawing.Point(20, 444);
+            this.groupBox2.Controls.Add(this.btn_exit);
+            this.groupBox2.Controls.Add(this.btn_newRound);
+            this.groupBox2.Controls.Add(this.btn_pick_4);
+            this.groupBox2.Controls.Add(this.btn_pick_3);
+            this.groupBox2.Controls.Add(this.btn_pick_2);
+            this.groupBox2.Controls.Add(this.btn_pick_1);
+            this.groupBox2.Location = new System.Drawing.Point(20, 462);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(375, 98);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Platzieren";
             // 
-            // button1
+            // btn_exit
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.button1.Location = new System.Drawing.Point(6, 14);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(180, 35);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Schlachtschiff [1]";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btn_exit.Location = new System.Drawing.Point(286, 65);
+            this.btn_exit.Name = "btn_exit";
+            this.btn_exit.Size = new System.Drawing.Size(83, 27);
+            this.btn_exit.TabIndex = 5;
+            this.btn_exit.Text = "Beenden";
+            this.btn_exit.UseVisualStyleBackColor = true;
+            this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
+            // 
+            // btn_newRound
+            // 
+            this.btn_newRound.Location = new System.Drawing.Point(286, 14);
+            this.btn_newRound.Name = "btn_newRound";
+            this.btn_newRound.Size = new System.Drawing.Size(83, 27);
+            this.btn_newRound.TabIndex = 4;
+            this.btn_newRound.Text = "Neue Runde";
+            this.btn_newRound.UseVisualStyleBackColor = true;
+            this.btn_newRound.Click += new System.EventHandler(this.btn_newRound_Click);
+            // 
+            // btn_pick_4
+            // 
+            this.btn_pick_4.BackColor = System.Drawing.Color.DarkOrange;
+            this.btn_pick_4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_pick_4.ForeColor = System.Drawing.Color.Black;
+            this.btn_pick_4.Location = new System.Drawing.Point(187, 14);
+            this.btn_pick_4.Name = "btn_pick_4";
+            this.btn_pick_4.Size = new System.Drawing.Size(70, 35);
+            this.btn_pick_4.TabIndex = 3;
+            this.btn_pick_4.Text = "U-Boot [4]";
+            this.btn_pick_4.UseVisualStyleBackColor = false;
+            this.btn_pick_4.Click += new System.EventHandler(this.btn_pick_4_Click);
+            // 
+            // btn_pick_3
+            // 
+            this.btn_pick_3.BackColor = System.Drawing.Color.PaleGreen;
+            this.btn_pick_3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_pick_3.ForeColor = System.Drawing.Color.Black;
+            this.btn_pick_3.Location = new System.Drawing.Point(152, 55);
+            this.btn_pick_3.Name = "btn_pick_3";
+            this.btn_pick_3.Size = new System.Drawing.Size(105, 35);
+            this.btn_pick_3.TabIndex = 2;
+            this.btn_pick_3.Text = "Zerstörer [3]";
+            this.btn_pick_3.UseVisualStyleBackColor = false;
+            this.btn_pick_3.Click += new System.EventHandler(this.btn_pick_3_Click);
+            // 
+            // btn_pick_2
+            // 
+            this.btn_pick_2.BackColor = System.Drawing.Color.IndianRed;
+            this.btn_pick_2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_pick_2.ForeColor = System.Drawing.Color.Black;
+            this.btn_pick_2.Location = new System.Drawing.Point(6, 55);
+            this.btn_pick_2.Name = "btn_pick_2";
+            this.btn_pick_2.Size = new System.Drawing.Size(140, 35);
+            this.btn_pick_2.TabIndex = 1;
+            this.btn_pick_2.Text = "Kreuzer [2]";
+            this.btn_pick_2.UseVisualStyleBackColor = false;
+            this.btn_pick_2.Click += new System.EventHandler(this.btn_pick_2_Click);
+            // 
+            // btn_pick_1
+            // 
+            this.btn_pick_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btn_pick_1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_pick_1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_pick_1.Location = new System.Drawing.Point(6, 14);
+            this.btn_pick_1.Name = "btn_pick_1";
+            this.btn_pick_1.Size = new System.Drawing.Size(175, 35);
+            this.btn_pick_1.TabIndex = 0;
+            this.btn_pick_1.Text = "Schlachtschiff [1]";
+            this.btn_pick_1.UseVisualStyleBackColor = false;
+            this.btn_pick_1.Click += new System.EventHandler(this.btn_pick_1_Click);
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(20, 441);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(375, 18);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "label4";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 552);
+            this.ClientSize = new System.Drawing.Size(862, 572);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox3);
@@ -196,12 +280,14 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.canvas_enemy);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.canvas_player);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.canvas_player)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvas_enemy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_enemy_top)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_enemy_left)).EndInit();
@@ -216,7 +302,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox canvas_player;
         private System.Windows.Forms.PictureBox canvas_enemy;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -228,7 +314,13 @@
         private System.Windows.Forms.Label label_enemy;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_pick_1;
+        private System.Windows.Forms.Button btn_pick_3;
+        private System.Windows.Forms.Button btn_pick_2;
+        private System.Windows.Forms.Button btn_pick_4;
+        private System.Windows.Forms.Button btn_exit;
+        private System.Windows.Forms.Button btn_newRound;
+        private System.Windows.Forms.Label label4;
     }
 }
 
