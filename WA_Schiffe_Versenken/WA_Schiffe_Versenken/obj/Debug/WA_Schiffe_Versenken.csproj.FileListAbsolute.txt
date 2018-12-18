@@ -18,3 +18,13 @@ C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_
 C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.CoreCompileInputs.cache
 C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.exe
 C:\Users\Sven\Source\Repos\Saftfresse\schiffe-versenken\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.pdb
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.exe.config
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.exe
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\bin\Debug\WA_Schiffe_Versenken.pdb
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csprojResolveAssemblyReference.cache
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.Form1.resources
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.Properties.Resources.resources
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.GenerateResource.cache
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.csproj.CoreCompileInputs.cache
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.exe
+C:\Users\Schüler\source\repos\schiffe-versenken-master\schiffe-versenken-master\WA_Schiffe_Versenken\WA_Schiffe_Versenken\obj\Debug\WA_Schiffe_Versenken.pdb
